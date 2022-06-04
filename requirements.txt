@@ -94,7 +94,7 @@ pytest-cov==3.0.0
 python-dateutil==2.8.2
 pytz==2022.1
 pytz-deprecation-shim==0.1.0.post0
--e git+https://github.com/cyyeh/py-code-analyzer.git@ee888d835529e2b0f145789b2317fc835ab11382#egg=pyvis&subdirectory=pyvis
+-e git+https://github.com/cyyeh/py-code-analyzer.git@43b696099c0e109ef101efc6bcc7ac10db51ec93#egg=pyvis&subdirectory=pyvis
 PyYAML==6.0
 pyzmq==23.1.0
 requests==2.27.1
