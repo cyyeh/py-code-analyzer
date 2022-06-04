@@ -33,7 +33,7 @@ class CodeImportsAnalyzer:
         self.python_files = python_files
         self._node_visitor = CodeImportsAnalyzer._NodeVisitor(self.imports)
 
-    def analyze_imports(self):
+    def analyze(self):
         for python_file in self.python_files:
             program = requests.get(python_file["download_url"]).text
             tree = ast.parse(program)
@@ -57,7 +57,7 @@ class CodeImportsAnalyzer:
                 else:
                     self.imports_graph.add_node(_nodes[0])
 
-        return self
+        return self.imports_graph
 
     def report(self):
         pprint(self.imports)
