@@ -2,7 +2,6 @@
 to get what modules are imported in given python files, then uses networkx to generate imports graph
 """
 import ast
-from pprint import pprint
 
 import networkx as nx
 import requests
@@ -84,4 +83,6 @@ class CodeImportsAnalyzer:
         return self.imports_graph
 
     def report(self):
+        from pprint import pprint
+
         pprint(self.python_imports)
