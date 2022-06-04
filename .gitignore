@@ -1,5 +1,5 @@
 .DS_Store
 .coverage
-*.html
+nx.html
 .env
 lib/
