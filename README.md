@@ -33,7 +33,7 @@ input to one GitHub public repo's URL(input)
   - [x] Use `ast` to parse imports among given python files
   - [x] Generate a basic `networkx` graph given python imports
   - [x] Visualize a basic `networkx` graph using `pyvis`
-- [ ] Build a `streamlit` app
+- [x] Build a `streamlit` app
 ## References
 
 - [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
