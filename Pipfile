@@ -7,8 +7,8 @@ name = "pypi"
 streamlit = "*"
 requests = "*"
 networkx = "*"
-pyvis = "*"
 orjson = "*"
+pyvis = {editable = true, path = "./pyvis"}
 
 [dev-packages]
 black = "*"

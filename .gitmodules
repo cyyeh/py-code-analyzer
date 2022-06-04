@@ -1,0 +1,3 @@
+[submodule "pyvis"]
+	path = pyvis
+	url = https://github.com/mrceresa/pyvis
