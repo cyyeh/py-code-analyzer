@@ -21,10 +21,31 @@ path = st.text_input(
     value="py_code_analyzer",
 )
 
-python_files = CodeFetcher().get_python_files(owner, repo, path)
-imports_graph = CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
-ImportsGraphVisualizer().visualize(imports_graph)
 
-imports_graph_html = open("nx.html", "r", encoding="utf-8")
-imports_graph_html_text = imports_graph_html.read()
-components.html(imports_graph_html_text, height=800)
+@st.cache
+def get_python_files(owner, repo, path):
+    return CodeFetcher().get_python_files(owner, repo, path)
+
+
+@st.cache
+def generate_imports_graph(python_files):
+    return CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
+
+
+@st.cache
+def generate_graph_visualization_file(imports_graph):
+    ImportsGraphVisualizer().visualize(imports_graph)
+
+
+@st.cache
+def read_graph_visualization_file():
+    imports_graph_html = open("nx.html", "r", encoding="utf-8")
+    return imports_graph_html.read()
+
+
+if owner and repo:
+    with st.spinner("Please wait..."):
+        generate_graph_visualization_file(
+            generate_imports_graph(get_python_files(owner, repo, path))
+        )
+        components.html(read_graph_visualization_file(), height=800)
