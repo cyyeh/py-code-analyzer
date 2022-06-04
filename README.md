@@ -14,3 +14,7 @@ input to one GitHub public repo's URL(input)
 ## Used technologies
 
 - Streamlit
+
+## References
+
+- [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
