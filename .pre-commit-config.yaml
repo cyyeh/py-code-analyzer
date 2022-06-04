@@ -21,7 +21,7 @@ repos:
         language: system
         entry: pipenv run flake8 py_code_analyzer
         types: [python]
-        exclude: setup.py|pyvis
+        exclude: setup.py
 
       - id: mypy
         name: mypy
