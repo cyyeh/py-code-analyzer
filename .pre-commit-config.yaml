@@ -5,29 +5,28 @@ repos:
         name: isort
         stages: [commit]
         language: system
-        entry: pipenv run isort py_code_analyzer
+        entry: pipenv run isort py_code_analyzer app.py
         types: [python]
 
       - id: black
         name: black
         stages: [commit]
         language: system
-        entry: pipenv run black py_code_analyzer
+        entry: pipenv run black py_code_analyzer app.py
         types: [python]
 
       - id: flake8
         name: flake8
         stages: [commit]
         language: system
-        entry: pipenv run flake8 py_code_analyzer
+        entry: pipenv run flake8 py_code_analyzer app.py
         types: [python]
-        exclude: setup.py
 
       - id: mypy
         name: mypy
         stages: [commit]
         language: system
-        entry: pipenv run mypy py_code_analyzer
+        entry: pipenv run mypy py_code_analyzer app.py
         types: [python]
         pass_filenames: false
 
@@ -35,13 +34,13 @@ repos:
       #   name: pytest
       #   stages: [commit]
       #   language: system
-      #   entry: pipenv run pytest py_code_analyzer
+      #   entry: pipenv run pytest tests
       #   types: [python]
 
       # - id: pytest-cov
       #   name: pytest
       #   stages: [push]
       #   language: system
-      #   entry: pipenv run pytest --cov py_code_analyzer
+      #   entry: pipenv run pytest --cov tests
       #   types: [python]
       #   pass_filenames: false
