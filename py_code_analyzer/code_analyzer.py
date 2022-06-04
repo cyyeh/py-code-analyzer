@@ -34,6 +34,7 @@ class CodeAnalyzer:
             tree = ast.parse(program)
             self.imports += [{"file_name": python_file["name"], "imports": []}]
             self._node_visitor.visit(tree)
+        return self
 
-    def report_imports(self):
+    def report(self):
         pprint(self.imports)
