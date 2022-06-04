@@ -1,6 +1,5 @@
 .DS_Store
 .coverage
-*.txt
 *.html
 .env
 lib/
