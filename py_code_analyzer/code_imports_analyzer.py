@@ -68,15 +68,18 @@ class CodeImportsAnalyzer:
                     self.imports_graph.add_node(_nodes[0])
 
                 # generate graph based on imported modules in each file
-                for _import in python_import["imports"]:
-                    if _import["module"] is None:
-                        _import_names = _import["name"].split(".")
-                        _new_nodes = _import_names + [_nodes[-1]]
-                        self._add_edges(_new_nodes)
-                    else:
-                        _import_names = _import["module"].split(".") + [_import["name"]]
-                        _new_nodes = _import_names + [_nodes[-1]]
-                        self._add_edges(_new_nodes)
+                if python_import["file_name"] != "__init__.py":
+                    for _import in python_import["imports"]:
+                        if _import["module"] is None:
+                            _import_names = _import["name"].split(".")
+                            _new_nodes = _import_names + [_nodes[-1]]
+                            self._add_edges(_new_nodes)
+                        else:
+                            _import_names = _import["module"].split(".") + [
+                                _import["name"]
+                            ]
+                            _new_nodes = _import_names + [_nodes[-1]]
+                            self._add_edges(_new_nodes)
 
         return self.imports_graph
 

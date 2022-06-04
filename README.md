@@ -27,8 +27,8 @@ input to one GitHub public repo's URL(input)
 
 ## TODOs
 
-- [ ] Build a prototype
-  - [ ] Finish `generate_imports_graph` implementation
+- [x] Build a prototype
+  - [x] Finish `generate_imports_graph` implementation
   - [x] Fetch python files given public GitHub repo url(owner, repo, path, ref)
   - [x] Use `ast` to parse imports among given python files
   - [x] Generate a basic `networkx` graph given python imports
