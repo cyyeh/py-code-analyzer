@@ -19,7 +19,7 @@ repos:
         name: flake8
         stages: [commit]
         language: system
-        entry: pipenv run flake8
+        entry: pipenv run flake8 py_code_analyzer
         types: [python]
         exclude: setup.py|pyvis
 
