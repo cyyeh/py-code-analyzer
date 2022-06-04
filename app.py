@@ -39,8 +39,7 @@ def generate_graph_visualization_file(imports_graph):
 
 @st.cache
 def read_graph_visualization_file():
-    imports_graph_html = open("nx.html", "r", encoding="utf-8")
-    return imports_graph_html.read()
+    return open("nx.html", "r", encoding="utf-8").read()
 
 
 if owner and repo:
@@ -48,4 +47,12 @@ if owner and repo:
         generate_graph_visualization_file(
             generate_imports_graph(get_python_files(owner, repo, path))
         )
-        components.html(read_graph_visualization_file(), height=800)
+        graph_visualization_file = read_graph_visualization_file()
+
+    st.download_button(
+        "Download the result file",
+        graph_visualization_file,
+        file_name="result.html",
+        mime="text/html",
+    )
+    components.html(graph_visualization_file, height=800, scrolling=True)

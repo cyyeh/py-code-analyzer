@@ -1,15 +1,11 @@
 import json
 import os
-import platform
-import shutil
 import tempfile
 import webbrowser
 from collections import defaultdict
-from platform import uname
 
 import jsonpickle
 import networkx as nx
-from IPython.core.display import HTML
 from IPython.display import IFrame
 from jinja2 import Template
 
@@ -277,7 +273,7 @@ class Network(object):
             try:
                 node = int(node)
                 self.add_node(node, **nd[node])
-            except:
+            except Exception:
                 # or node could be string
                 assert isinstance(node, str)
                 self.add_node(node, **nd[node])
@@ -502,9 +498,6 @@ class Network(object):
         self.html = self.generate_html(notebook=notebook)
 
         if notebook:
-            if os.path.exists("lib"):
-                shutil.rmtree(f"lib")
-            shutil.copytree(f"{os.path.dirname(__file__)}/lib", "lib")
             with open(name, "w+") as out:
                 out.write(self.html)
             return IFrame(name, width=self.width, height="600px")
@@ -513,10 +506,6 @@ class Network(object):
                 tempdir = "."
             else:
                 tempdir = tempfile.mkdtemp()
-            # with tempfile.mkdtemp() as tempdir:
-            if os.path.exists(f"{tempdir}/lib"):
-                shutil.rmtree(f"{tempdir}/lib")
-            shutil.copytree(f"{os.path.dirname(__file__)}/lib", f"{tempdir}/lib")
 
             with open(f"{tempdir}/{name}", "w+") as out:
                 out.write(self.html)
