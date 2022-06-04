@@ -12,8 +12,9 @@ PERSONAL_ACCESS_TOKEN = os.environ.get("PERSONAL_ACCESS_TOKEN", "")
 
 
 class CodeFetcher:
+    @classmethod
     def get_python_files(
-        self,
+        cls,
         owner: str,
         repo: str,
         path: str = "",
@@ -41,7 +42,7 @@ class CodeFetcher:
                 and result["type"] == "dir"
                 and not result["name"].startswith(".")
             ):
-                python_files += self.get_python_files(
+                python_files += cls.get_python_files(
                     owner, repo, path=result["path"], recursive=recursive
                 )
 
