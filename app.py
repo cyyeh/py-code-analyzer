@@ -1,6 +1,9 @@
-from py_code_analyzer.code_analyzer import CodeAnalyzer
-from py_code_analyzer.code_fetcher import get_repository_python_files
+from py_code_analyzer.code_fetcher import CodeFetcher
+from py_code_analyzer.code_imports_analyzer import CodeImportsAnalyzer
+from py_code_analyzer.imports_graph_visualizer import ImportsGraphVisualizer
 
-python_files = get_repository_python_files("cyyeh", "gradio")
-
-CodeAnalyzer(python_files).analyze_imports().report()
+python_files = CodeFetcher().get_python_files("cyyeh", "gradio", "gradio")
+code_imports_analyzer = (
+    CodeImportsAnalyzer(python_files).analyze_imports().generate_imports_graph()
+)
+ImportsGraphVisualizer().visualize(code_imports_analyzer.imports_graph)

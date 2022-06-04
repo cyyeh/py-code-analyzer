@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 streamlit = "*"
 requests = "*"
+networkx = "*"
+pyvis = "*"
+orjson = "*"
 
 [dev-packages]
 black = "*"
