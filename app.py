@@ -27,7 +27,7 @@ def get_python_files(owner, repo, path):
     return CodeFetcher().get_python_files(owner, repo, path)
 
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def generate_imports_graph(python_files):
     return CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
 
