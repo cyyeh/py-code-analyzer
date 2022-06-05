@@ -1,3 +1,5 @@
+"""This file generates a pyvis graph locally given a networkx graph
+"""
 import networkx as nx
 
 from pyvis import Network

@@ -346,6 +346,7 @@
         nodeColors = {};
           allNodes = nodes.get({ returnType: "Object" });
           for (var nodeId in allNodes) {
+            console.log(allNodes[nodeId].color);
             nodeColors[nodeId] = allNodes[nodeId].color;
           }
 

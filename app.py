@@ -17,42 +17,48 @@ st.markdown(
 owner = st.text_input("Enter GitHub username", value="cyyeh")
 repo = st.text_input("Enter GitHib repo name", value="py-code-analyzer")
 path = st.text_input(
-    "Enter target directory path, if the value is empty, then the target directory will be the root directory",
+    "Enter target directory path. Default: the target directory will be the root directory",
     value="py_code_analyzer",
 )
+ref = st.text_input(
+    "Enter the name of the commit/branch/tag. Default: the repository's default branch",
+)
+clicked_ok_button = st.button("OK")
+st.markdown("---")
 
 
-@st.cache
-def get_python_files(owner, repo, path):
-    return CodeFetcher().get_python_files(owner, repo, path)
+def get_python_files(owner, repo, path, ref=""):
+    return CodeFetcher().get_python_files(owner, repo, path, ref=ref)
 
 
-@st.cache(allow_output_mutation=True)
 def generate_imports_graph(python_files):
     return CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
 
 
-@st.cache
 def generate_graph_visualization_file(imports_graph):
     ImportsGraphVisualizer().visualize(imports_graph)
 
 
-@st.cache
 def read_graph_visualization_file():
     return open("nx.html", "r", encoding="utf-8").read()
 
 
-if owner and repo:
-    with st.spinner("Please wait..."):
-        generate_graph_visualization_file(
-            generate_imports_graph(get_python_files(owner, repo, path))
-        )
-        graph_visualization_file = read_graph_visualization_file()
+if clicked_ok_button and owner and repo:
+    with st.spinner("Getting python files..."):
+        python_files = get_python_files(owner, repo, path, ref=ref)
 
-    st.download_button(
-        "Download the result file",
-        graph_visualization_file,
-        file_name="result.html",
-        mime="text/html",
-    )
-    components.html(graph_visualization_file, height=800, scrolling=True)
+    with st.spinner("Generating imports graph..."):
+        imports_graph = generate_imports_graph(python_files)
+
+    with st.spinner("Generating graph visualization file..."):
+        generate_graph_visualization_file(imports_graph)
+
+    with st.spinner("Showing the graph..."):
+        graph_visualization_file = read_graph_visualization_file()
+        st.download_button(
+            "Download the result file",
+            graph_visualization_file,
+            file_name="result.html",
+            mime="text/html",
+        )
+        components.html(graph_visualization_file, height=600, scrolling=True)

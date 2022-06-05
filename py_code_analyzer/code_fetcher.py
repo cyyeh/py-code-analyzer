@@ -7,7 +7,7 @@ import requests
 
 # to increase api rate limiting
 # https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting
-USER = os.environ.get("PERSONAL_ACCESS_TOKEN", "")
+USER = os.environ.get("USER", "")
 PERSONAL_ACCESS_TOKEN = os.environ.get("PERSONAL_ACCESS_TOKEN", "")
 
 
@@ -32,18 +32,21 @@ class CodeFetcher:
             api_url += f"?ref={ref}"
 
         python_files = []
-        api_results = requests.get(api_url).json()
+        api_results = requests.get(
+            api_url, headers={"Accept": "application/vnd.github.v3+json"}
+        ).json()
 
         for result in api_results:
-            if result["type"] == "file" and result["name"].endswith(".py"):
-                python_files.append(result)
-            elif (
-                recursive
-                and result["type"] == "dir"
-                and not result["name"].startswith(".")
-            ):
-                python_files += cls.get_python_files(
-                    owner, repo, path=result["path"], recursive=recursive
-                )
+            if type(result) is dict:
+                if result["type"] == "file" and result["name"].endswith(".py"):
+                    python_files.append(result)
+                elif (
+                    recursive
+                    and result["type"] == "dir"
+                    and not result["name"].startswith(".")
+                ):
+                    python_files += cls.get_python_files(
+                        owner, repo, path=result["path"], recursive=recursive
+                    )
 
         return python_files
