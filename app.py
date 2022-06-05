@@ -46,7 +46,7 @@ if clicked_ok_button and owner and repo:
     with st.spinner("Getting python files..."):
         python_files = get_python_files(owner, repo, path, ref=ref)
 
-    with st.spinner("Generating imports graph..."):
+    with st.spinner("Parsing python files and generating imports graph..."):
         imports_graph = generate_imports_graph(python_files)
 
     with st.spinner("Generating graph visualization file..."):

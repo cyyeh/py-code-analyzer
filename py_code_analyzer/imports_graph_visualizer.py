@@ -11,7 +11,7 @@ class ImportsGraphVisualizer:
         cls,
         imports_graph: nx.Graph,
         directed: bool = True,
-        layout: bool = True,  # Use hierarchical if True
+        layout: bool = False,  # Use hierarchical if True
         neighborhood_highlight: bool = True,
         select_menu: bool = True,
         width: int = 100,
