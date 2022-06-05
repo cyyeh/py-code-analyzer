@@ -46,7 +46,7 @@ class CodeFetcher:
                     and not result["name"].startswith(".")
                 ):
                     python_files += cls.get_python_files(
-                        owner, repo, path=result["path"], recursive=recursive
+                        owner, repo, path=result["path"], ref=ref, recursive=recursive
                     )
 
         return python_files
