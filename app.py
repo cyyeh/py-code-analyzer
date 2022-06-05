@@ -14,13 +14,13 @@ st.markdown(
     "**Checkout the source code [here](https://github.com/cyyeh/py-code-analyzer)**"
 )
 
-owner = st.text_input("Enter GitHub username", value="cyyeh")
-repo = st.text_input("Enter GitHib repo name", value="py-code-analyzer")
+owner = st.text_input("Fill in the GitHub username", value="cyyeh")
+repo = st.text_input("Fill in the GitHib repository", value="py-code-analyzer")
 path = st.text_input(
-    "Enter target directory path. Default: the root directory",
+    "Fill in the target directory path. Default: the root directory",
 )
 ref = st.text_input(
-    "Enter the name of the commit/branch/tag. Default: the repository's default branch",
+    "Fill in the name of the commit/branch/tag. Default: the repository's default branch",
 )
 clicked_ok_button = st.button("OK")
 st.markdown("---")
