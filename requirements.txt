@@ -10,6 +10,7 @@ beautifulsoup4==4.11.1
 black==22.3.0
 bleach==5.0.0
 blinker==1.4
+branca==0.5.0
 cachetools==5.2.0
 certifi==2022.5.18.1
 cffi==1.15.0
@@ -61,7 +62,6 @@ networkx==2.8.3
 nodeenv==1.6.0
 notebook==6.4.11
 numpy==1.22.4
-orjson==3.7.1
 packaging==21.3
 pandas==1.4.2
 pandocfilters==1.5.0
@@ -94,7 +94,7 @@ pytest-cov==3.0.0
 python-dateutil==2.8.2
 pytz==2022.1
 pytz-deprecation-shim==0.1.0.post0
--e git+https://github.com/cyyeh/py-code-analyzer.git@43b696099c0e109ef101efc6bcc7ac10db51ec93#egg=pyvis&subdirectory=pyvis
+-e git+https://github.com/cyyeh/py-code-analyzer.git@87560b2437f9892898eb1dc2981b02be45e55cbf#egg=pyvis&subdirectory=pyvis
 PyYAML==6.0
 pyzmq==23.1.0
 requests==2.27.1
