@@ -48,6 +48,8 @@ class CodeImportsAnalyzer:
 
     def _add_edges(self, nodes):
         for first_node, second_node in zip(nodes, nodes[1:]):
+            self.imports_graph.add_node(first_node, color="gray")
+            self.imports_graph.add_node(second_node, color="gray")
             self.imports_graph.add_edge(first_node, second_node)
 
     def generate_imports_graph(self):
