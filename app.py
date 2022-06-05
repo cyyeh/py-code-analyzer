@@ -17,7 +17,7 @@ st.markdown(
 owner = st.text_input("Enter GitHub username", value="cyyeh")
 repo = st.text_input("Enter GitHib repo name", value="py-code-analyzer")
 path = st.text_input(
-    "Enter target directory path. Default: the target directory will be the root directory",
+    "Enter target directory path. Default: the root directory",
 )
 ref = st.text_input(
     "Enter the name of the commit/branch/tag. Default: the repository's default branch",
