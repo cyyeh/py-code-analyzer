@@ -49,6 +49,7 @@ input to one GitHub public repo's URL(input)
   - [x] Visualize a basic `networkx` graph using `pyvis`
 - [x] Build a `streamlit` app
 - [ ] Performance optimization
+  - [x] `requests` to `aiohttp`: reduce latency 8-10x in my laptop(MacBook Pro)
 ## References
 
 - [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
