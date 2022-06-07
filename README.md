@@ -48,8 +48,7 @@ input to one GitHub public repo's URL(input)
   - [x] Generate a basic `networkx` graph given python imports
   - [x] Visualize a basic `networkx` graph using `pyvis`
 - [x] Build a `streamlit` app
-- [ ] Change network library from `networkx` to `graph-tool` due to [performance issue](https://graph-tool.skewed.de/performance)
-- [ ] Choose an appropriate network visualization library
+- [ ] Performance optimization
 ## References
 
 - [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
