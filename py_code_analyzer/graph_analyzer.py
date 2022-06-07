@@ -16,6 +16,6 @@ class GraphAnalyzer:
     def add_edges_from_nodes(self, nodes):
         assert len(nodes) > 1
         for first_node, second_node in zip(nodes, nodes[1:]):
-            self.graph.add_node(first_node, color="gray")  # set default node color
-            self.graph.add_node(second_node, color="gray")  # set default node color
-            self.graph.add_edge(first_node, second_node)
+            self.add_node(first_node, color="gray")  # set default node color
+            self.add_node(second_node, color="gray")  # set default node color
+            self.add_edge(first_node, second_node)

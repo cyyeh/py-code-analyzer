@@ -8,6 +8,7 @@ streamlit = "*"
 requests = "*"
 networkx = "*"
 pyvis = {editable = true, path = "./pyvis"}
+aiohttp = {extras = ["speedups"], version = "*"}
 
 [dev-packages]
 black = "*"

@@ -3,7 +3,7 @@ to get what modules are imported in given python files, then uses networkx to ge
 """
 import ast
 
-import requests
+import aiohttp
 
 from .graph_analyzer import GraphAnalyzer
 
@@ -33,21 +33,29 @@ class CodeImportsAnalyzer:
         self.python_files = python_files
         self._node_visitor = CodeImportsAnalyzer._NodeVisitor(self.python_imports)
 
-    def analyze(self):
-        for python_file in self.python_files:
-            program = requests.get(python_file["download_url"]).text
-            tree = ast.parse(program)
-            self.python_imports += [
-                {
-                    "file_name": python_file["name"],
-                    "file_path": python_file["path"],
-                    "imports": [],
-                }
-            ]
-            self._node_visitor.visit(tree)
-        return self
+    async def analyze(self):
+        async with aiohttp.ClientSession() as session:
+            for python_file in self.python_files:
+                async with session.get(
+                    python_file["download_url"],
+                    headers={"Accept": "application/vnd.github.v3+json"},
+                ) as response:
+                    program = await response.text()
+                    tree = ast.parse(program)
+                    self.python_imports += [
+                        {
+                            "file_name": python_file["name"],
+                            "file_path": python_file["path"],
+                            "imports": [],
+                        }
+                    ]
+                    self._node_visitor.visit(tree)
 
     def generate_imports_graph(self):
+        # TODO: thought on how to improve the graph generation logic
+        # generate a dictionary of lists data structure
+        # generate a graph based on a dictionary of lists
+
         for python_import in self.python_imports:
             _nodes = python_import["file_path"].split("/")
             if len(_nodes):

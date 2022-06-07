@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 import streamlit as st
@@ -38,7 +39,9 @@ def get_python_files(owner, repo, path, ref=""):
 
 @conditonal_decorator(time_function, DEV)
 def generate_imports_graph(python_files):
-    return CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
+    analyzer = CodeImportsAnalyzer(python_files)
+    asyncio.run(analyzer.analyze())
+    return analyzer.generate_imports_graph()
 
 
 @conditonal_decorator(time_function, DEV)
