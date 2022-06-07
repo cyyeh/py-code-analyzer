@@ -1,6 +1,16 @@
 import time
 
 
+def conditonal_decorator(dec, condition):
+    def decorator(func):
+        if not condition:
+            return func
+
+        return dec(func)
+
+    return decorator
+
+
 def time_function(f):
     def wrapper(*args, **kwargs):
         begin = time.time()

@@ -1,8 +1,12 @@
+import os
+
 import streamlit as st
 import streamlit.components.v1 as components
 
 from py_code_analyzer import CodeFetcher, CodeImportsAnalyzer, ImportsGraphVisualizer
-from utils import time_function
+from utils import conditonal_decorator, time_function
+
+DEV = int(os.environ.get("DEV", "1"))
 
 TITLE = "Python Code Analyzer"
 st.set_page_config(page_title=TITLE, layout="wide")
@@ -27,22 +31,22 @@ clicked_ok_button = st.button("OK")
 st.markdown("---")
 
 
-@time_function
+@conditonal_decorator(time_function, DEV)
 def get_python_files(owner, repo, path, ref=""):
     return CodeFetcher().get_python_files(owner, repo, path, ref=ref)
 
 
-@time_function
+@conditonal_decorator(time_function, DEV)
 def generate_imports_graph(python_files):
     return CodeImportsAnalyzer(python_files).analyze().generate_imports_graph()
 
 
-@time_function
+@conditonal_decorator(time_function, DEV)
 def generate_graph_visualization_file(imports_graph):
     ImportsGraphVisualizer().visualize(imports_graph)
 
 
-@time_function
+@conditonal_decorator(time_function, DEV)
 def read_graph_visualization_file():
     return open("nx.html", "r", encoding="utf-8").read()
 
