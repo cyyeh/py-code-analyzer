@@ -53,3 +53,4 @@ input to one GitHub public repo's URL(input)
 ## References
 
 - [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
+- [Benchmark of popular graph/network packages](https://www.timlrx.com/blog/benchmark-of-popular-graph-network-packages)

@@ -3,8 +3,9 @@ to get what modules are imported in given python files, then uses networkx to ge
 """
 import ast
 
-import networkx as nx
 import requests
+
+from .graph_analyzer import GraphAnalyzer
 
 
 class CodeImportsAnalyzer:
@@ -28,7 +29,7 @@ class CodeImportsAnalyzer:
 
     def __init__(self, python_files):
         self.python_imports = []
-        self.imports_graph = nx.DiGraph()  # imports_graph is a directed graph
+        self.graph_analyzer = GraphAnalyzer(is_directed=True)
         self.python_files = python_files
         self._node_visitor = CodeImportsAnalyzer._NodeVisitor(self.python_imports)
 
@@ -48,9 +49,9 @@ class CodeImportsAnalyzer:
 
     def _add_edges(self, nodes):
         for first_node, second_node in zip(nodes, nodes[1:]):
-            self.imports_graph.add_node(first_node, color="gray")
-            self.imports_graph.add_node(second_node, color="gray")
-            self.imports_graph.add_edge(first_node, second_node)
+            self.graph_analyzer.add_node(first_node, color="gray")
+            self.graph_analyzer.add_node(second_node, color="gray")
+            self.graph_analyzer.add_edge(first_node, second_node)
 
     def generate_imports_graph(self):
         for python_import in self.python_imports:
@@ -66,7 +67,7 @@ class CodeImportsAnalyzer:
                         del _nodes[-1]
                     self._add_edges(_nodes)
                 else:
-                    self.imports_graph.add_node(_nodes[0])
+                    self.graph_analyzer.add_node(_nodes[0])
 
                 # generate graph based on imported modules in each file
                 if python_import["file_name"] != "__init__.py":
@@ -82,7 +83,7 @@ class CodeImportsAnalyzer:
                             _new_nodes = _import_names + [_nodes[-1]]
                             self._add_edges(_new_nodes)
 
-        return self.imports_graph
+        return self.graph_analyzer.graph
 
     def report(self):
         from pprint import pprint
