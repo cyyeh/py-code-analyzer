@@ -45,8 +45,8 @@ def generate_imports_graph(python_files):
 
 
 @conditonal_decorator(time_function, DEV)
-def generate_graph_visualization_file(imports_graph):
-    ImportsGraphVisualizer().visualize(imports_graph)
+def generate_graph_visualization_file(imports_graph, heading):
+    ImportsGraphVisualizer().visualize(imports_graph, heading=heading)
 
 
 @conditonal_decorator(time_function, DEV)
@@ -62,7 +62,7 @@ if clicked_ok_button and owner and repo:
         imports_graph = generate_imports_graph(python_files)
 
     with st.spinner("Generating graph visualization file..."):
-        generate_graph_visualization_file(imports_graph)
+        generate_graph_visualization_file(imports_graph, f"{owner}/{repo}/{path}")
 
     with st.spinner("Showing the graph..."):
         graph_visualization_file = read_graph_visualization_file()

@@ -10,6 +10,7 @@ class ImportsGraphVisualizer:
     def visualize(
         cls,
         imports_graph: nx.Graph,
+        heading: str = "",
         directed: bool = True,
         layout: bool = False,  # Use hierarchical if True
         neighborhood_highlight: bool = True,
@@ -24,6 +25,7 @@ class ImportsGraphVisualizer:
             height=f"{height}px",
             directed=directed,
             layout=layout,
+            heading=heading,
             neighborhood_highlight=neighborhood_highlight,
             select_menu=select_menu,
         )
