@@ -22,19 +22,16 @@ st.markdown(
 
 owner = st.text_input("Fill in the GitHub username", value="cyyeh")
 repo = st.text_input("Fill in the GitHib repository", value="py-code-analyzer")
-path = st.text_input(
-    "Fill in the target directory path. Default: the root directory",
+tree_sha = st.text_input(
+    "Fill in sha, ex: 2f387d0adea72a7b4c99a5e8fc3e4fd83b5469b8",
 )
-ref = st.text_input(
-    "Fill in the name of the commit/branch/tag. Default: the repository's default branch",
-)
-clicked_ok_button = st.button("OK")
+clicked_ok_button = st.button("OK", disabled=not owner or not repo or not tree_sha)
 st.markdown("---")
 
 
 @conditonal_decorator(time_function, DEV)
-def get_python_files(owner, repo, path, ref=""):
-    return CodeFetcher().get_python_files(owner, repo, path, ref=ref)
+def get_python_files(owner, repo, tree_sha):
+    return CodeFetcher().get_python_files(owner, repo, tree_sha)
 
 
 @conditonal_decorator(time_function, DEV)
@@ -56,13 +53,13 @@ def read_graph_visualization_file():
 
 if clicked_ok_button and owner and repo:
     with st.spinner("Getting python files..."):
-        python_files = get_python_files(owner, repo, path, ref=ref)
+        python_files = get_python_files(owner, repo, tree_sha)
 
     with st.spinner("Parsing python files and generating imports graph..."):
         imports_graph = generate_imports_graph(python_files)
 
     with st.spinner("Generating graph visualization file..."):
-        generate_graph_visualization_file(imports_graph, f"{owner}/{repo}/{path}")
+        generate_graph_visualization_file(imports_graph, f"{owner}/{repo}")
 
     with st.spinner("Showing the graph..."):
         graph_visualization_file = read_graph_visualization_file()

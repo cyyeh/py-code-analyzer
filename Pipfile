@@ -9,6 +9,7 @@ requests = "*"
 networkx = "*"
 pyvis = {editable = true, path = "./pyvis"}
 aiohttp = {extras = ["speedups"], version = "*"}
+pybase64 = "*"
 
 [dev-packages]
 black = "*"

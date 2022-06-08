@@ -49,8 +49,13 @@ input to one GitHub public repo's URL(input)
   - [x] Visualize a basic `networkx` graph using `pyvis`
 - [x] Build a `streamlit` app
 - [ ] Performance optimization
-  - [x] `requests` to `aiohttp`: reduce latency 8-10x in my laptop(MacBook Pro)
+  - [x] `requests` to `aiohttp`
+  - [x] change fetching GitHub repository content api from preventing querying multiple times
+  - [ ] ...
+- [ ] Network analysis
+- [ ] Enhance network visualization UI
 ## References
 
 - [How to set up a perfect Python project](https://sourcery.ai/blog/python-best-practices/)
 - [Benchmark of popular graph/network packages](https://www.timlrx.com/blog/benchmark-of-popular-graph-network-packages)
+- [Asynchronous HTTP Requests in Python with aiohttp and asyncio](https://www.twilio.com/blog/asynchronous-http-requests-in-python-with-aiohttp)

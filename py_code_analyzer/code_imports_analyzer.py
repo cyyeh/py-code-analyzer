@@ -2,10 +2,42 @@
 to get what modules are imported in given python files, then uses networkx to generate imports graph
 """
 import ast
+import asyncio
 
 import aiohttp
+import pybase64
 
 from .graph_analyzer import GraphAnalyzer
+
+
+def construct_api_url(api_url):
+    import os
+
+    # to increase api rate limiting
+    # https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting
+    USER = os.environ.get("USER", "")
+    PERSONAL_ACCESS_TOKEN = os.environ.get("PERSONAL_ACCESS_TOKEN", "")
+
+    api_urls = api_url.split("://")
+    if USER and PERSONAL_ACCESS_TOKEN:
+        api_url = f"{USER}:{PERSONAL_ACCESS_TOKEN}@{api_urls[-1]}"
+
+    return f"{api_urls[0]}://{api_url}"
+
+
+async def get_program_text(session, python_file):
+    async with session.get(
+        construct_api_url(python_file["url"]),
+        headers={"Accept": "application/vnd.github.v3+json"},
+    ) as response:
+        data = await response.json()
+        print(data)
+        if data["encoding"] == "base64":
+            return data["content"]
+        else:
+            print(
+                f"WARNING: {python_file}'s encoding is {data['encoding']}, not base64"
+            )
 
 
 class CodeImportsAnalyzer:
@@ -35,21 +67,24 @@ class CodeImportsAnalyzer:
 
     async def analyze(self):
         async with aiohttp.ClientSession() as session:
+            tasks = []
             for python_file in self.python_files:
-                async with session.get(
-                    python_file["download_url"],
-                    headers={"Accept": "application/vnd.github.v3+json"},
-                ) as response:
-                    program = await response.text()
-                    tree = ast.parse(program)
-                    self.python_imports += [
-                        {
-                            "file_name": python_file["name"],
-                            "file_path": python_file["path"],
-                            "imports": [],
-                        }
-                    ]
-                    self._node_visitor.visit(tree)
+                self.python_imports += [
+                    {
+                        "file_name": python_file["path"].split("/")[-1],
+                        "file_path": python_file["path"],
+                        "imports": [],
+                    }
+                ]
+                tasks.append(
+                    asyncio.ensure_future(get_program_text(session, python_file))
+                )
+
+            base64_program_texts = await asyncio.gather(*tasks)
+            for base64_program_text in base64_program_texts:
+                program = pybase64.b64decode(base64_program_text)
+                tree = ast.parse(program)
+                self._node_visitor.visit(tree)
 
     def generate_imports_graph(self):
         # TODO: thought on how to improve the graph generation logic
