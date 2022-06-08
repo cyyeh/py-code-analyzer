@@ -92,6 +92,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
 pyarrow==8.0.0
+pybase64==1.2.2
 pycares==4.1.2
 pycodestyle==2.8.0
 pycparser==2.21
@@ -106,7 +107,7 @@ pytest-cov==3.0.0
 python-dateutil==2.8.2
 pytz==2022.1
 pytz-deprecation-shim==0.1.0.post0
--e git+https://github.com/cyyeh/py-code-analyzer.git@deb90b0c8e3503461edcccfd57e0ae28dcd4d791#egg=pyvis&subdirectory=pyvis
+-e git+https://github.com/cyyeh/py-code-analyzer.git@fb9c35d5dcd5878775d651a0128f303795ac7dde#egg=pyvis&subdirectory=pyvis
 PyYAML==6.0
 pyzmq==23.1.0
 requests==2.27.1
