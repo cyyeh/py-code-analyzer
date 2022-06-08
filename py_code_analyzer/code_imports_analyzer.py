@@ -77,18 +77,19 @@ class CodeImportsAnalyzer:
                 )
 
             results = await asyncio.gather(*tasks)
-            for base64_program_text, python_file_path in results:
-                if base64_program_text:
-                    self.python_imports += [
-                        {
-                            "file_name": python_file_path.split("/")[-1],
-                            "file_path": python_file_path,
-                            "imports": [],
-                        }
-                    ]
-                    program = pybase64.b64decode(base64_program_text)
-                    tree = ast.parse(program)
-                    self._node_visitor.visit(tree)
+            if results:
+                for base64_program_text, python_file_path in results:
+                    if base64_program_text:
+                        self.python_imports += [
+                            {
+                                "file_name": python_file_path.split("/")[-1],
+                                "file_path": python_file_path,
+                                "imports": [],
+                            }
+                        ]
+                        program = pybase64.b64decode(base64_program_text)
+                        tree = ast.parse(program)
+                        self._node_visitor.visit(tree)
 
     def generate_imports_graph(self):
         # TODO: thought on how to improve the graph generation logic

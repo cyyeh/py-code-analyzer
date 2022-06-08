@@ -42,8 +42,8 @@ def get_python_files(owner: str, repo: str, tree_sha: str):
 
 
 @conditonal_decorator(time_function, DEV)
-async def parse_python_files(analyzer: CodeImportsAnalyzer):
-    _ = await analyzer.parse_python_files()
+def parse_python_files(analyzer: CodeImportsAnalyzer):
+    asyncio.run(analyzer.parse_python_files())
 
 
 @conditonal_decorator(time_function, DEV)
@@ -67,7 +67,7 @@ if clicked_ok_button and owner and repo:
 
     analyzer = CodeImportsAnalyzer(python_files)
     with st.spinner("Parsing python files..."):
-        asyncio.run(parse_python_files(analyzer))
+        parse_python_files(analyzer)
 
     with st.spinner("Generating imports graph..."):
         imports_graph = generate_imports_graph(analyzer)
