@@ -10,7 +10,7 @@ import pybase64
 from .graph_analyzer import GraphAnalyzer
 
 
-def construct_api_url(api_url):
+def construct_fetch_program_text_api_url(api_url):
     import os
 
     # to increase api rate limiting
@@ -27,7 +27,7 @@ def construct_api_url(api_url):
 
 async def get_program_text(session, python_file):
     async with session.get(
-        construct_api_url(python_file["url"]),
+        construct_fetch_program_text_api_url(python_file["url"]),
         headers={"Accept": "application/vnd.github.v3+json"},
     ) as response:
         data = await response.json()

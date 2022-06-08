@@ -4,7 +4,7 @@ how to get all python files in the given directory
 import requests
 
 
-def construct_api_url(owner, repo, tree_sha, recursive):
+def construct_fetch_repo_content_api_url(owner, repo, tree_sha, recursive):
     import os
 
     # to increase api rate limiting
@@ -33,7 +33,7 @@ class CodeFetcher:
         """https://docs.github.com/en/rest/git/trees#get-a-tree"""
         # TODO: deal with truncated api results
 
-        api_url = construct_api_url(owner, repo, tree_sha, recursive)
+        api_url = construct_fetch_repo_content_api_url(owner, repo, tree_sha, recursive)
 
         response = requests.get(
             api_url, headers={"Accept": "application/vnd.github.v3+json"}
