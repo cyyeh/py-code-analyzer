@@ -23,12 +23,19 @@ st.markdown(
 owner = st.text_input("Fill in the GitHub username", value="cyyeh")
 repo = st.text_input("Fill in the GitHib repository", value="py-code-analyzer")
 tree_sha = st.text_input(
-    "Fill in sha, ex: 2f387d0adea72a7b4c99a5e8fc3e4fd83b5469b8",
+    "Fill in SHA", value="2f387d0adea72a7b4c99a5e8fc3e4fd83b5469b8"
+)
+show_graph_visualization = st.checkbox(
+    "Show graph visualization",
+    value=True,
+    help="If the graph is large, then consider uncheck the checkbox. "
+    "For example, the result graph of fetching TensorFlow repo would be large.",
 )
 clicked_ok_button = st.button("OK", disabled=not owner or not repo or not tree_sha)
 st.markdown("---")
 
 
+@st.cache
 @conditonal_decorator(time_function, DEV)
 def get_python_files(owner, repo, tree_sha):
     return CodeFetcher().get_python_files(owner, repo, tree_sha)
@@ -69,4 +76,5 @@ if clicked_ok_button and owner and repo:
             file_name="result.html",
             mime="text/html",
         )
-        components.html(graph_visualization_file, height=600, scrolling=True)
+        if show_graph_visualization:
+            components.html(graph_visualization_file, height=600, scrolling=True)

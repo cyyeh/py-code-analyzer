@@ -27,18 +27,20 @@ def construct_fetch_program_text_api_url(api_url):
 
 
 async def get_program_text(session, python_file):
+    # about Retry-After
+    # https://docs.github.com/en/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits
     async with session.get(
         construct_fetch_program_text_api_url(python_file["url"]),
-        headers={"Accept": "application/vnd.github.v3+json"},
+        headers={"Accept": "application/vnd.github.v3+json", "Retry-After": "5"},
     ) as response:
-        data = await response.json()
-        print(data)
-        if data["encoding"] == "base64":
-            return data["content"]
-        else:
-            print(
-                f"WARNING: {python_file['path']}'s encoding is {data['encoding']}, not base64"
-            )
+        if response.status == 200:
+            data = await response.json()
+            if data["encoding"] == "base64":
+                return data["content"]
+            else:
+                print(
+                    f"WARNING: {python_file['path']}'s encoding is {data['encoding']}, not base64"
+                )
 
 
 class CodeImportsAnalyzer:
@@ -83,9 +85,10 @@ class CodeImportsAnalyzer:
 
             base64_program_texts = await asyncio.gather(*tasks)
             for base64_program_text in base64_program_texts:
-                program = pybase64.b64decode(base64_program_text)
-                tree = ast.parse(program)
-                self._node_visitor.visit(tree)
+                if base64_program_text:
+                    program = pybase64.b64decode(base64_program_text)
+                    tree = ast.parse(program)
+                    self._node_visitor.visit(tree)
 
     def generate_imports_graph(self):
         # TODO: thought on how to improve the graph generation logic
