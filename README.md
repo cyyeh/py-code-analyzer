@@ -21,7 +21,7 @@ among files included in the directory with better visualization.
 
 ## Setup
 
-- Python version: 3.8
+- `pipenv install -r requirements.txt --python=3.8`
 - `cp .env.example .env`: fill in your GitHub username and personal access token if you need to increase [GitHub API requests rate limiting](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting)
 - `make run`
 - Also refer to References to understand settings behind the project
