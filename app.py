@@ -3,7 +3,6 @@ import os
 
 import streamlit as st
 import streamlit.components.v1 as components
-from aiocache import Cache, cached
 
 from py_code_analyzer import CodeFetcher, CodeImportsAnalyzer, ImportsGraphVisualizer
 from utils import conditonal_decorator, time_function
@@ -42,7 +41,6 @@ def get_python_files(owner: str, repo: str, tree_sha: str):
     return CodeFetcher().get_python_files(owner, repo, tree_sha)
 
 
-@cached(ttl=None, cache=Cache.MEMORY)
 @conditonal_decorator(time_function, DEV)
 async def parse_python_files(analyzer: CodeImportsAnalyzer):
     _ = await analyzer.parse_python_files()
