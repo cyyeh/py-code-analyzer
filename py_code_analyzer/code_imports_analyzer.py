@@ -31,12 +31,11 @@ async def get_program_text(session, python_file):
         headers={"Accept": "application/vnd.github.v3+json"},
     ) as response:
         data = await response.json()
-        print(data)
         if data["encoding"] == "base64":
             return data["content"]
         else:
             print(
-                f"WARNING: {python_file}'s encoding is {data['encoding']}, not base64"
+                f"WARNING: {python_file['path']}'s encoding is {data['encoding']}, not base64"
             )
 
 
