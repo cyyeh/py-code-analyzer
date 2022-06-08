@@ -107,7 +107,7 @@ pytest-cov==3.0.0
 python-dateutil==2.8.2
 pytz==2022.1
 pytz-deprecation-shim==0.1.0.post0
--e git+https://github.com/cyyeh/py-code-analyzer.git@fb9c35d5dcd5878775d651a0128f303795ac7dde#egg=pyvis&subdirectory=pyvis
+-e git+https://github.com/cyyeh/py-code-analyzer.git@c917abb5f197a1e74268a8065e44939a6db62ec5#egg=pyvis&subdirectory=pyvis
 PyYAML==6.0
 pyzmq==23.1.0
 requests==2.27.1
@@ -134,6 +134,7 @@ tzlocal==4.2
 urllib3==1.26.9
 validators==0.20.0
 virtualenv==20.14.1
+watchdog==2.1.8
 wcwidth==0.2.5
 webencodings==0.5.1
 widgetsnbextension==3.6.0

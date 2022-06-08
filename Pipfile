@@ -10,6 +10,7 @@ networkx = "*"
 pyvis = {editable = true, path = "./pyvis"}
 aiohttp = {extras = ["speedups"], version = "*"}
 pybase64 = "*"
+watchdog = "*"
 
 [dev-packages]
 black = "*"

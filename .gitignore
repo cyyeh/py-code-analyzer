@@ -2,3 +2,5 @@
 .coverage
 nx.html
 .env
+Pipfile
+Pipfile.lock
