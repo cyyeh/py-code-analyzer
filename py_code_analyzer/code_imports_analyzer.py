@@ -68,7 +68,7 @@ class CodeImportsAnalyzer:
         self.python_files = python_files
         self._node_visitor = CodeImportsAnalyzer._NodeVisitor(self.python_imports)
 
-    async def analyze(self):
+    async def parse_python_files(self):
         async with aiohttp.ClientSession() as session:
             tasks = []
             for python_file in self.python_files:

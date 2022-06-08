@@ -3,6 +3,7 @@ import os
 
 import streamlit as st
 import streamlit.components.v1 as components
+from aiocache import Cache, cached
 
 from py_code_analyzer import CodeFetcher, CodeImportsAnalyzer, ImportsGraphVisualizer
 from utils import conditonal_decorator, time_function
@@ -37,22 +38,23 @@ st.markdown("---")
 
 @st.cache
 @conditonal_decorator(time_function, DEV)
-def get_python_files(owner, repo, tree_sha):
+def get_python_files(owner: str, repo: str, tree_sha: str):
     return CodeFetcher().get_python_files(owner, repo, tree_sha)
 
 
+@cached(ttl=None, cache=Cache.MEMORY)
 @conditonal_decorator(time_function, DEV)
-def parse_python_files(analyzer):
-    asyncio.run(analyzer.analyze())
+async def parse_python_files(analyzer: CodeImportsAnalyzer):
+    _ = await analyzer.parse_python_files()
 
 
 @conditonal_decorator(time_function, DEV)
-def generate_imports_graph(analyzer):
+def generate_imports_graph(analyzer: CodeImportsAnalyzer):
     return analyzer.generate_imports_graph()
 
 
 @conditonal_decorator(time_function, DEV)
-def generate_graph_visualization_file(imports_graph, heading):
+def generate_graph_visualization_file(imports_graph, heading: str):
     ImportsGraphVisualizer().visualize(imports_graph, heading=heading)
 
 
@@ -67,7 +69,7 @@ if clicked_ok_button and owner and repo:
 
     analyzer = CodeImportsAnalyzer(python_files)
     with st.spinner("Parsing python files..."):
-        parse_python_files(analyzer)
+        asyncio.run(parse_python_files(analyzer))
 
     with st.spinner("Generating imports graph..."):
         imports_graph = generate_imports_graph(analyzer)

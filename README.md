@@ -30,6 +30,7 @@ among files included in the directory with better visualization.
 - `networkx`: network analysis
 - `pyvis`: network visualization
 - `aiohttp`: asynchronous HTTP client
+- `aiocache`: caching asynchronous API requests
 - `pybase64`: faster base64 encoding/decoding
 - `streamlit`: web app
 
