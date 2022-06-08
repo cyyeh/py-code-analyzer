@@ -74,8 +74,6 @@ if clicked_ok_button and owner and repo:
 
     with st.spinner("Generating graph visualization file..."):
         generate_graph_visualization_file(imports_graph, f"{owner}/{repo}")
-
-    with st.spinner("Showing the graph..."):
         graph_visualization_file = read_graph_visualization_file()
         st.download_button(
             "Download the result file",
@@ -83,5 +81,7 @@ if clicked_ok_button and owner and repo:
             file_name="result.html",
             mime="text/html",
         )
-        if show_graph_visualization:
+
+    if show_graph_visualization:
+        with st.spinner("Showing the graph..."):
             components.html(graph_visualization_file, height=600, scrolling=True)
