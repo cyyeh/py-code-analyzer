@@ -42,9 +42,12 @@ def get_python_files(owner, repo, tree_sha):
 
 
 @conditonal_decorator(time_function, DEV)
-def generate_imports_graph(python_files):
-    analyzer = CodeImportsAnalyzer(python_files)
+def parse_python_files(analyzer):
     asyncio.run(analyzer.analyze())
+
+
+@conditonal_decorator(time_function, DEV)
+def generate_imports_graph(analyzer):
     return analyzer.generate_imports_graph()
 
 
@@ -62,8 +65,12 @@ if clicked_ok_button and owner and repo:
     with st.spinner("Getting python files..."):
         python_files = get_python_files(owner, repo, tree_sha)
 
-    with st.spinner("Parsing python files and generating imports graph..."):
-        imports_graph = generate_imports_graph(python_files)
+    analyzer = CodeImportsAnalyzer(python_files)
+    with st.spinner("Parsing python files..."):
+        parse_python_files(analyzer)
+
+    with st.spinner("Generating imports graph..."):
+        imports_graph = generate_imports_graph(analyzer)
 
     with st.spinner("Generating graph visualization file..."):
         generate_graph_visualization_file(imports_graph, f"{owner}/{repo}")
