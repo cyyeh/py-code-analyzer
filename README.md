@@ -24,18 +24,13 @@ among files included in the directory with better visualization.
 - `pipenv install -r requirements.txt --python=3.8`
 - `cp .env.example .env`: fill in your GitHub username and personal access token if you need to increase [GitHub API requests rate limiting](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting)
 - `make run`
-- Also refer to References to understand settings behind the project
-
-## Thoughts on solving the problem
-
-1. Build a prototype without UI interface to show dependencies among files included in the directory(output) given user's
-input to one GitHub public repo's URL(input)
-2. Build a `streamlit` app to show results using some network visualization tools
 
 ## Used technologies
 
 - `networkx`: network analysis
 - `pyvis`: network visualization
+- `aiohttp`: asynchronous HTTP client
+- `pybase64`: faster base64 encoding/decoding
 - `streamlit`: web app
 
 ## TODOs
