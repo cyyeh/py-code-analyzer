@@ -18,11 +18,12 @@ def construct_fetch_program_text_api_url(api_url):
     USER = os.environ.get("USER", "")
     PERSONAL_ACCESS_TOKEN = os.environ.get("PERSONAL_ACCESS_TOKEN", "")
 
-    api_urls = api_url.split("://")
     if USER and PERSONAL_ACCESS_TOKEN:
-        api_url = f"{USER}:{PERSONAL_ACCESS_TOKEN}@{api_urls[-1]}"
-
-    return f"{api_urls[0]}://{api_url}"
+        protocol, api_url_components = api_url.split("://")
+        new_api_url_components = f"{USER}:{PERSONAL_ACCESS_TOKEN}@{api_url_components}"
+        return f"{protocol}://{new_api_url_components}"
+    else:
+        return api_url
 
 
 async def get_program_text(session, python_file):
