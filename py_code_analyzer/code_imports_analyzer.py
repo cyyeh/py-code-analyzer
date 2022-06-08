@@ -36,7 +36,7 @@ async def get_program_text(session, python_file):
         if response.status == 200:
             data = await response.json()
             if data["encoding"] == "base64":
-                return data["content"]
+                return data["content"], python_file["path"]
             else:
                 print(
                     f"WARNING: {python_file['path']}'s encoding is {data['encoding']}, not base64"
@@ -72,20 +72,20 @@ class CodeImportsAnalyzer:
         async with aiohttp.ClientSession() as session:
             tasks = []
             for python_file in self.python_files:
-                self.python_imports += [
-                    {
-                        "file_name": python_file["path"].split("/")[-1],
-                        "file_path": python_file["path"],
-                        "imports": [],
-                    }
-                ]
                 tasks.append(
                     asyncio.ensure_future(get_program_text(session, python_file))
                 )
 
-            base64_program_texts = await asyncio.gather(*tasks)
-            for base64_program_text in base64_program_texts:
+            results = await asyncio.gather(*tasks)
+            for base64_program_text, python_file_path in results:
                 if base64_program_text:
+                    self.python_imports += [
+                        {
+                            "file_name": python_file_path.split("/")[-1],
+                            "file_path": python_file_path,
+                            "imports": [],
+                        }
+                    ]
                     program = pybase64.b64decode(base64_program_text)
                     tree = ast.parse(program)
                     self._node_visitor.visit(tree)
